@@ -26,7 +26,7 @@ Choose the **Standard Evaluation (Desktop Experience)** version of Server 2016:
 
 Accept the license terms. Select **Custom: Install Windows only (advanced)**. Leave the default partition and format settings. Allow Windows to restart. You may disconnect the installation media now. 
 
-Create a password and confirm—_Password123_ is sufficient for a home lab with no real-life security risks to mitigate—and log in. You can select **Yes** on the Networks popup to allow your machine to be discoverable on the network. 
+Create a password—_Password123_ is sufficient for a home lab with no real-life security risks to mitigate—and log in. You can select **Yes** on the Networks popup to allow your machine to be discoverable on the network. 
 
 If your system date and time are incorrect, change them in Settings > Time & language > Date & time. 
 
@@ -64,12 +64,15 @@ When you see _Installation succeeded_ (as in above image), select **Promote this
 
 <p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/008-domain-name.png" width="640"></p>
 
-Enter a DSRM password and confirm. Leave DNS delegation off. Leave the default NetBIOS domain name and AD paths. Install. 
+Enter a DSRM password and confirm. Leave DNS delegation off. Leave the default NetBIOS domain name and AD paths. Install and allow the system to reboot. 
 
+<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/009-domain-login.png" width="640"></p>
 
+Tip: circled in red are two ways you can tell if a server is a domain controller, right from the lock screen: "...sign into another domain" and "ROMANJM\Administrator" (given a domain named _ROMANJM_, as an example). 
 
+Go to **Start** > **Control Panel** > **Network and Sharing Center** (aka **View network status and tasks**) > **Change adapter settings**, right-click your adapter (usually named _Ethernet_ or _Ethernet0_), select **Properties**, double-click **Internet Protocol Version 4 (TCP/IPv4)**, and select **Obtain DNS server address automatically**. Repeat for **Internet Protocol Version 6 (TCP/IPv6)**: 
 
-
+<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/010-DNS-address.png" width="640"></p>
 
 
 

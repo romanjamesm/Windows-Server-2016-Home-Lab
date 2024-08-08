@@ -97,3 +97,39 @@ As you can see, the last command fails and throws a helpful error: "This compute
 <p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/013-dotnet-framework.png" width="640"></p>
 
 Allow the computer to restart. Go back into PowerShell as an administrator, change to the D: drive, and run `.\setup /PrepareSchema /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF` again, successfully this time. Then, run `.\setup /Preparead /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF /OrganizationName:"COMPANY"`:
+
+<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/014-preparead.png" width="640"></p>
+
+Finally, run `.\setup /Preparedomain /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF`:
+
+<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/015-preparedomain.png" width="640"></p>
+
+Go back to File Explorer > This PC and right-click the D: drive and select **Install or run program from your media**. Don't check for updates right now. Accept the license agreement. Use recommended settings. Select the **Mailbox role** to be installed on the server. Use the default path for the Exchange Server installation. Leave malware scanning enabled. 
+
+The prerequisite analysis step throws an error, giving us another opportunity to apply troubleshooting skills:
+
+<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/016-rewrite-lacking.png" width="640"></p>
+
+The error reads: "The 'IIS URL rewrite module' isn't installed on this computer and needs to be installed before Exchange Setup can begin. For more information, visit: https://docs.microsoft.com/Exchange/plan-and-deploy/deployment-ref/ms-exch-setupreadiness-IISURLRewriteNotInstalled?view=exchserver-2016." Click the link in the error message and select **URL Rewrite Module version 2.1**. Next to **English**, select **x64 installer**. Run the download, accept the terms, and install:
+
+<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/017-url-rewrite.png" width="640"></p>
+
+Back in the Exchange Server installation wizard, click **retry** on the Readiness Checks page and the checks should succeed. Select **install**. Wait about a half hour. Select **Launch Exchange Administration Center after finishing Exchange setup.** Click **finish**. The Exchange admin center should open in Chrome:
+
+<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/018-admin-center.png" width="640"></p>
+
+If the page doesn't automatically open, open Chrome and browse to **localhost/ecp** or, given the computer name _AD-Exch-2016_, to **ad-exch-2016/ecp**. (The "ecp" stands for "Exchange Control Panel," which is the name of the predecessor to the Exchange admin center. Microsoft didn't update "ecp" to "eac" I guess.) 
+
+Enter your domain name and "administrator" username, delimited by a backslash as in the above image. Enter your password and sign in:
+
+<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/019-exchange-recipients.png" width="640"></p>
+
+This is the current list of recipient mailboxes, only one at the moment. 
+
+In Server Manager, practice creating users and organizational units (OUs) to organize the users. 
+
+Back in the EAC, add some mailboxes and assign them to users. 
+
+Next, we'll create shares and security groups with different levels of permissions to access those shares. 
+
+

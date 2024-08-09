@@ -132,7 +132,7 @@ Next, we'll create network shares and security groups with different levels of p
 
 ## Relevant Documentation
 
-- For installing Exchange 2016 prerequisites: https://learn.microsoft.com/en-us/exchange/plan-and-deploy/prerequisites?view=exchserver-2016#exchange-2016-mailbox-servers-on-windows-server-2016
+- For installing Exchange 2016 dependencies: https://learn.microsoft.com/en-us/exchange/plan-and-deploy/prerequisites?view=exchserver-2016#exchange-2016-mailbox-servers-on-windows-server-2016
 - Preparing AD and domain for Exchange 2016: https://learn.microsoft.com/en-us/exchange/plan-and-deploy/prepare-ad-and-domains?view=exchserver-2016
 - Creating mail users in the EAC: https://learn.microsoft.com/en-us/exchange/recipients/mail-users?view=exchserver-2016
 

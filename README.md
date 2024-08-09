@@ -94,7 +94,7 @@ As you can see, the last command fails and throws a helpful error: "This compute
 
 <p align="center"><img alt=".NET Framework 4.8 installer" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/013-dotnet-framework.png" width="640"></p>
 
-Restart the computer. Go back into PowerShell as an administrator, change to the D: drive, and run `.\setup /prepareschema /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF` again, successfully this time. Then, run `.\setup /preparead /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF /OrganizationName:"COMPANY"` to create the _Exchange organization_ within AD:
+Restart the computer. Go back into PowerShell as an administrator, change to the D: drive, and run `.\setup /prepareschema /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF` again, successfully this time. Then, run `.\setup /preparead /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF /OrganizationName:"COMPANY"` to create the _Exchange organization_ in AD:
 
 <p align="center"><img alt="Successful .\Setup /PrepareSchema and /PrepareAD commands in PowerShell" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/014-preparead.png" width="640"></p>
 

@@ -68,7 +68,7 @@ Enter a DSRM password and confirm. Leave DNS delegation off. Leave the default N
 
 <p align="center"><img alt="Server 2016 lock screen showing 'Other user'" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/009-domain-login.png" width="640"></p>
 
-Tip: circled in red are two ways you can tell if a server is a domain controller, right from the lock screen: "...sign in to another domain" and "ROMANJM\Administrator" (given a domain name of _ROMANJM_, as an example). 
+Tip: circled in red are two ways you can tell if you are now part of a domain as opposed to a workgroup, right from the lock screen: "...sign in to another domain" and "ROMANJM\Administrator" (given a domain name of _ROMANJM_, as an example). 
 
 Go to **Start** > **Control Panel** > **Network and Sharing Center** (aka **View network status and tasks**) > **Change adapter settings**, right-click your adapter (usually named _Ethernet_ or _Ethernet0_), select **Properties**, double-click **Internet Protocol Version 4 (TCP/IPv4)**, and select **Obtain DNS server address automatically**. Repeat for **Internet Protocol Version 6 (TCP/IPv6)**: 
 

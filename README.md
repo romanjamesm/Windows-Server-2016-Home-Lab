@@ -42,7 +42,7 @@ Open Internet Explorer, select the gear :gear: icon in the top-right corner > **
 
 Back in the Internet Options dialog box, select the **Local Intranet** security zone > **Custom level...** and make sure file downloads are enabled there too. 
 
-Still in the same Security tab, select the **Trusted sites** zone > **Sites**, and add **https://\*.google.com** to your trusted sites. 
+Still in the same Security tab, select the **Trusted sites** zone > **Sites** and add **https://\*.google.com** to your trusted sites. 
 
 Google **Chrome**, download Chrome, run Chrome. Close IE for good. 
 
@@ -78,49 +78,49 @@ If using a VM, reconfigure your disc drive to use the Exchange Server image down
 
 Go to Start, right-click Windows PowerShell, and run it as Administrator. Run the `d:` command to change to the D: drive. Double-check the contents with `dir`: 
 
-<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/011-D-drive.png" width="640"></p>
+<p align="center"><img alt="Output of d: and dir commands in PowerShell" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/011-D-drive.png" width="640"></p>
 
-Run `Install-WindowsFeature RSAT-ADDS`. Then, run the following one-liner:
+Run `Install-WindowsFeature RSAT-ADDS` to install the Remote Tools Administration Pack. Then, run the following one-liner:
 
 ```PowerShell
 Install-WindowsFeature NET-Framework-45-Features, RPC-over-HTTP-proxy, RSAT-Clustering, RSAT-Clustering-CmdInterface, RSAT-Clustering-Mgmt, RSAT-Clustering-PowerShell, Web-Mgmt-Console, WAS-Process-Model, Web-Asp-Net45, Web-Basic-Auth, Web-Client-Auth, Web-Digest-Auth, Web-Dir-Browsing, Web-Dyn-Compression, Web-Http-Errors, Web-Http-Logging, Web-Http-Redirect, Web-Http-Tracing, Web-ISAPI-Ext, Web-ISAPI-Filter, Web-Lgcy-Mgmt-Console, Web-Metabase, Web-Mgmt-Console, Web-Mgmt-Service, Web-Net-Ext45, Web-Request-Monitor, Web-Server, Web-Stat-Compression, Web-Static-Content, Web-Windows-Auth, Web-WMI, Windows-Identity-Foundation, RSAT-ADDS
 ``` 
 
-Next, run `.\setup /PrepareSchema /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF`:
+Next, run `.\Setup /PrepareSchema /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF` to extend the AD schema for Exchange:
 
-<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/012-PS-installs.png" width="640"></p>
+<p align="center"><img alt="PowerShell showing two successfully run commands and an error-throwing command" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/012-PS-installs.png" width="640"></p>
 
-As you can see, the last command fails and throws a helpful error: "This computer requires .NET Framework 4.8 (https://support.microsoft.com/kb/4503548)." This is the third dependency of Exchange 2016, also needed to prepare AD. Open the link (highlighted in the above image) in Chrome and scroll down to **Download information**. Click **Download the Microsoft .NET Framework 4.8 offline installer package now.** Run the download, accept the terms, and install:
+As you can see, the last command fails and throws a helpful error: "This computer requires .NET Framework 4.8 (https://support.microsoft.com/kb/4503548)." This is the third dependency of Exchange 2016, also needed in preparing AD. Open the link (highlighted in the above image) in Chrome and scroll down to **Download information**. Click **Download the Microsoft .NET Framework 4.8 offline installer package now.** Run the download and install:
 
-<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/013-dotnet-framework.png" width="640"></p>
+<p align="center"><img alt=".NET Framework 4.8 installer" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/013-dotnet-framework.png" width="640"></p>
 
-Allow the computer to restart. Go back into PowerShell as an administrator, change to the D: drive, and run `.\setup /PrepareSchema /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF` again, successfully this time. Then, run `.\setup /Preparead /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF /OrganizationName:"COMPANY"`:
+Restart the computer. Go back into PowerShell as an administrator, change to the D: drive, and run `.\setup /prepareschema /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF` again, successfully this time. Then, run `.\setup /preparead /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF /OrganizationName:"COMPANY"` to create the _Exchange organization_ in AD:
 
-<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/014-preparead.png" width="640"></p>
+<p align="center"><img alt="Successful .\Setup /PrepareSchema and /PrepareAD commands in PowerShell" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/014-preparead.png" width="640"></p>
 
-Finally, run `.\setup /Preparedomain /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF`:
+Finally, run `.\setup /preparedomain /IAcceptExchangeServerLicenseTerms_DiagnosticDataOFF` to prepare the AD domain where mail users will be located:
 
-<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/015-preparedomain.png" width="640"></p>
+<p align="center"><img alt=".\Setup /PrepareDomain succeeding in PowerShell" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/015-preparedomain.png" width="640"></p>
 
-Go back to File Explorer > This PC and right-click the D: drive and select **Install or run program from your media**. Don't check for updates right now. Accept the license agreement. Use recommended settings. Select the **Mailbox role** to be installed on the server. Use the default path for the Exchange Server installation. Leave malware scanning enabled. 
+Go back to File Explorer > This PC, right-click the D: drive, and select **Install or run program from your media**. Don't check for updates right now. Accept the license agreement. Use recommended settings for errors. Select the Mailbox role for the server. Use the default path for the Exchange Server installation. Leave malware scanning enabled. 
 
 The prerequisite analysis step throws an error, giving us another opportunity to apply troubleshooting skills:
 
-<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/016-rewrite-lacking.png" width="640"></p>
+<p align="center"><img alt="Readiness Checks failing in the Exchange Server installation wizard" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/016-rewrite-lacking.png" width="640"></p>
 
-The error reads: "The 'IIS URL rewrite module' isn't installed on this computer and needs to be installed before Exchange Setup can begin. For more information, visit: https://docs.microsoft.com/Exchange/plan-and-deploy/deployment-ref/ms-exch-setupreadiness-IISURLRewriteNotInstalled?view=exchserver-2016." This is the fourth and final dependency of Exchange 2016. Click the link in the error message and select **URL Rewrite Module version 2.1**. Next to **English**, select **x64 installer**. Run the download, accept the terms, and install:
+The error reads: "The 'IIS URL rewrite module' isn't installed on this computer and needs to be installed before Exchange Setup can begin. For more information, visit: https://docs.microsoft.com/Exchange/plan-and-deploy/deployment-ref/ms-exch-setupreadiness-IISURLRewriteNotInstalled?view=exchserver-2016." This is the fourth and final dependency of Exchange 2016. Click the link in the error message and select **URL Rewrite Module version 2.1**. Next to **English**, select **x64 installer**. Run the download and install:
 
-<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/017-url-rewrite.png" width="640"></p>
+<p align="center"><img alt="IIS URL Rewrite Module 2.1 installer" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/017-url-rewrite.png" width="640"></p>
 
 Back in the Exchange Server installation wizard, click **retry** on the Readiness Checks page and the checks should succeed. Select **install**. Wait about a half hour. Select **Launch Exchange Administration Center after finishing Exchange setup.** Click **finish**. The Exchange admin center should open in Chrome:
 
-<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/018-admin-center.png" width="640"></p>
+<p align="center"><img alt="EAC login page in Chrome" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/018-admin-center.png" width="640"></p>
 
-If the page doesn't automatically open, open Chrome and browse to **localhost/ecp** or, given the computer name _AD-Exch-2016_, to **ad-exch-2016/ecp**. (The "ecp" stands for "Exchange Control Panel," which is the name of the predecessor to the Exchange admin center. Microsoft didn't update "ecp" to "eac" I guess.) 
+If the page does not automatically open, then browse to **localhost/ecp** or, given a hostname of _AD-Exch-2016_, to **ad-exch-2016/ecp** in Chrome. (The "ecp" stands for "Exchange Control Panel," which is the name of the predecessor to the Exchange admin center. Microsoft didn't update "ecp" to "eac" I guess.) 
 
 Enter your domain name and "administrator" username, delimited by a backslash as in the above image. Enter your password and sign in:
 
-<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/019-exchange-recipients.png" width="640"></p>
+<p align="center"><img alt="EAC recipient mailboxes page in Chrome" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/019-exchange-recipients.png" width="640"></p>
 
 This is the current list of recipient mailboxes, only one at the moment. 
 
@@ -128,9 +128,11 @@ In Server Manager, practice creating users and organizational units (OUs) to org
 
 Back in the EAC, add some mailboxes and assign them to users. 
 
-Next, we'll create shares and security groups with different levels of permissions to access those shares. 
+Next, we'll create network shares and security groups with different levels of permissions to access those shares. 
 
 ## Relevant Documentation
 
-- For setting up Exchange Server: https://learn.microsoft.com/en-us/exchange/plan-and-deploy/prerequisites?view=exchserver-2016#exchange-2016-mailbox-servers-on-windows-server-2016
+- For installing Exchange 2016 prerequisites: https://learn.microsoft.com/en-us/exchange/plan-and-deploy/prerequisites?view=exchserver-2016#exchange-2016-mailbox-servers-on-windows-server-2016
+- Preparing AD and domain for Exchange 2016: https://learn.microsoft.com/en-us/exchange/plan-and-deploy/prepare-ad-and-domains?view=exchserver-2016
+- Creating mail users in the EAC: https://learn.microsoft.com/en-us/exchange/recipients/mail-users?view=exchserver-2016
 

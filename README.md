@@ -46,33 +46,33 @@ Still in the same Security tab, select the **Trusted sites** zone > **Sites**, a
 
 Google **Chrome**, download Chrome, run Chrome. Close IE for good. 
 
-In Chrome, Google **Unified Communications Managed API 4.0**. The first link should be https://www.microsoft.com/en-us/download/details.aspx?id=34992. Download and run the setup program: 
+In Chrome, Google **Unified Communications Managed API 4.0**. The first link should be https://www.microsoft.com/en-us/download/details.aspx?id=34992. This is the first dependency of Exchange 2016. Download and run the setup program: 
 
 <p align="center"><img alt="Unified Communications Managed API 4.0 Runtime installer" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/005-UCMA-setup.png" width="640"></p>
 
 Accept the terms and install. 
 
-Google **Visual C++ Redistributable 2013 download**. Click the first link: https://www.microsoft.com/en-us/download/details.aspx?id=40784. Click **Download** and select the 64-bit version. Run the download and install: 
+Google **Visual C++ Redistributable 2013 download**. Click the first link: https://www.microsoft.com/en-us/download/details.aspx?id=40784. This is the second dependency of Exchange 2016, needed to prepare AD later. Click **Download** and select the 64-bit version. Run the download and install: 
 
 <p align="center"><img alt="Visual C++ 2013 Redistributable setup program" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/006-vcredist.png" width="640"></p>
 
-Next, we will install the required features for AD DS, such as Group Policy and Lightweight Directory Services (LDS). Go to Start > Server Manager > Manage > Add Roles and Features > Next. Use the default **Role-based** installation and server selection. Select **Active Directory Domain Services** > **Add Features** to add the AD DS role to the server. Those are the only tools and features needed; proceed to install:
+Next, we will install AD DS and its required features, such as Group Policy and Lightweight Directory Services (LDS). Go to Start > Server Manager > Manage > Add Roles and Features > Next. Use the default **Role-based** installation and server selection. Select **Active Directory Domain Services** > **Add Features** to add the AD DS role to the server. That's everything for now; proceed to install:
 
-<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/007-AD-DS-install.png" width="640"></p>
+<p align="center"><img alt="Results screen of the Add Roles and Features Wizard" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/007-AD-DS-install.png" width="640"></p>
 
 When you see _Installation succeeded_ (as in above image), select **Promote this server to a domain controller** > **Add a new forest** and enter a root domain name: 
 
-<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/008-domain-name.png" width="640"></p>
+<p align="center"><img alt="Deployment Configuration screen of the AD DS Configuration Wizard" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/008-domain-name.png" width="640"></p>
 
 Enter a DSRM password and confirm. Leave DNS delegation off. Leave the default NetBIOS domain name and AD paths. Install and allow the system to reboot. 
 
-<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/009-domain-login.png" width="640"></p>
+<p align="center"><img alt="Server 2016 lock screen showing 'Other user'" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/009-domain-login.png" width="640"></p>
 
-Tip: circled in red are two ways you can tell if a server is a domain controller, right from the lock screen: "...sign into another domain" and "ROMANJM\Administrator" (given a domain named _ROMANJM_, as an example). 
+Tip: circled in red are two ways you can tell if a server is a domain controller, right from the lock screen: "...sign in to another domain" and "ROMANJM\Administrator" (given a domain name of _ROMANJM_, as an example). 
 
 Go to **Start** > **Control Panel** > **Network and Sharing Center** (aka **View network status and tasks**) > **Change adapter settings**, right-click your adapter (usually named _Ethernet_ or _Ethernet0_), select **Properties**, double-click **Internet Protocol Version 4 (TCP/IPv4)**, and select **Obtain DNS server address automatically**. Repeat for **Internet Protocol Version 6 (TCP/IPv6)**: 
 
-<p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/010-DNS-address.png" width="640"></p>
+<p align="center"><img alt="IPv6 Properties dialog box showing DNS server address settings" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/010-DNS-address.png" width="640"></p>
 
 If using a VM, reconfigure your disc drive to use the Exchange Server image downloaded at the beginning. Connect the Exchange Server installation media. It should show in File Explorer > This PC as the D: drive. 
 
@@ -90,7 +90,7 @@ Next, run `.\setup /PrepareSchema /IAcceptExchangeServerLicenseTerms_DiagnosticD
 
 <p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/012-PS-installs.png" width="640"></p>
 
-As you can see, the last command fails and throws a helpful error: "This computer requires .NET Framework 4.8 (https://support.microsoft.com/kb/4503548)." Open the link (highlighted in the above image) in Chrome and scroll down to **Download information**. Click **Download the Microsoft .NET Framework 4.8 offline installer package now.** Run the download, accept the terms, and install:
+As you can see, the last command fails and throws a helpful error: "This computer requires .NET Framework 4.8 (https://support.microsoft.com/kb/4503548)." This is the third dependency of Exchange 2016, also needed to prepare AD. Open the link (highlighted in the above image) in Chrome and scroll down to **Download information**. Click **Download the Microsoft .NET Framework 4.8 offline installer package now.** Run the download, accept the terms, and install:
 
 <p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/013-dotnet-framework.png" width="640"></p>
 
@@ -108,7 +108,7 @@ The prerequisite analysis step throws an error, giving us another opportunity to
 
 <p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/016-rewrite-lacking.png" width="640"></p>
 
-The error reads: "The 'IIS URL rewrite module' isn't installed on this computer and needs to be installed before Exchange Setup can begin. For more information, visit: https://docs.microsoft.com/Exchange/plan-and-deploy/deployment-ref/ms-exch-setupreadiness-IISURLRewriteNotInstalled?view=exchserver-2016." Click the link in the error message and select **URL Rewrite Module version 2.1**. Next to **English**, select **x64 installer**. Run the download, accept the terms, and install:
+The error reads: "The 'IIS URL rewrite module' isn't installed on this computer and needs to be installed before Exchange Setup can begin. For more information, visit: https://docs.microsoft.com/Exchange/plan-and-deploy/deployment-ref/ms-exch-setupreadiness-IISURLRewriteNotInstalled?view=exchserver-2016." This is the fourth and final dependency of Exchange 2016. Click the link in the error message and select **URL Rewrite Module version 2.1**. Next to **English**, select **x64 installer**. Run the download, accept the terms, and install:
 
 <p align="center"><img alt="" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/017-url-rewrite.png" width="640"></p>
 
@@ -130,4 +130,7 @@ Back in the EAC, add some mailboxes and assign them to users.
 
 Next, we'll create shares and security groups with different levels of permissions to access those shares. 
 
+## Relevant Documentation
+
+- For setting up Exchange Server: https://learn.microsoft.com/en-us/exchange/plan-and-deploy/prerequisites?view=exchserver-2016#exchange-2016-mailbox-servers-on-windows-server-2016
 

@@ -64,7 +64,7 @@ When you see _Installation succeeded_ (as in above image), select **Promote this
 
 <p align="center"><img alt="Deployment Configuration screen of the AD DS Configuration Wizard" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/008-domain-name.png" width="640"></p>
 
-Enter a DSRM password and confirm. Leave DNS delegation off. Leave the default NetBIOS domain name and AD paths. Install and allow the system to reboot. 
+Enter a DSRM password and confirm. Leave DNS delegation off. Leave the default NetBIOS domain name and AD paths. Install and allow the system to reboot and assume its new form: a domain controller. 
 
 <p align="center"><img alt="Server 2016 lock screen showing 'Other user'" src="https://github.com/romanjamesm/media/blob/main/Windows-Server-2016-Home-Lab/009-domain-login.png" width="640"></p>
 
